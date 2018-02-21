@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"github.com/yasaichi-sandbox/trace"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
 	"text/template"
@@ -32,6 +34,7 @@ func main() {
 	flag.Parse()
 
 	room := newRoom()
+	room.tracer = trace.New(os.Stdout)
 
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	http.Handle("/room", room)
