@@ -36,7 +36,7 @@ func main() {
 	room := newRoom()
 	room.tracer = trace.New(os.Stdout)
 
-	http.Handle("/", &templateHandler{filename: "chat.html"})
+	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/room", room)
 
 	go room.run()
