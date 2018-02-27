@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	_ "github.com/stretchr/gomniauth"
 	"github.com/yasaichi-sandbox/trace"
 	"log"
 	"net/http"

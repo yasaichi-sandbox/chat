@@ -7,9 +7,51 @@
   revision = "ea4d1f681babbce9545c9c5f3d5194a789c89f5b"
   version = "v1.2.0"
 
+[[projects]]
+  branch = "master"
+  name = "github.com/stretchr/codecs"
+  packages = ["."]
+  revision = "04a5b1e1910de7aaf00e1d4419d2508247fba1b4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/stretchr/gomniauth"
+  packages = [".","common"]
+  revision = "4b6c822be2eb64551618722ff80cecde4d63d9be"
+
+[[projects]]
+  name = "github.com/stretchr/objx"
+  packages = ["."]
+  revision = "facf9a85c22f48d2f52f2380e4efce1768749a89"
+  version = "v0.1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/stretchr/signature"
+  packages = ["."]
+  revision = "168b2a1e1b562bf381d47471e31f5979a2a51cd5"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/stretchr/stew"
+  packages = ["strings"]
+  revision = "80ef0842b48b329a6120607c817a85aff5a2ec71"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/stretchr/tracer"
+  packages = ["."]
+  revision = "66d3696bba973e1697f7d68413b3f19c6d6e2a7c"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/yasaichi-sandbox/trace"
+  packages = ["."]
+  revision = "42e31dd81da4b14d2a0c3ca96ab0fc47d2fdf883"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9bb5473e8ddf72048ad72d7c6f9237578049f8f45af05f45123fd79bf9117d86"
+  inputs-digest = "d42d3a93d9b84e214c729b8729d395050d1126a104f7a5cc2b6cbcfe25926762"
   solver-name = "gps-cdcl"
   solver-version = 1
