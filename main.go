@@ -2,7 +2,9 @@ package main
 
 import (
 	"flag"
-	_ "github.com/stretchr/gomniauth"
+	"fmt"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/google"
 	"github.com/yasaichi-sandbox/trace"
 	"log"
 	"net/http"
@@ -33,6 +35,16 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	addr := flag.String("addr", ":8080", "アプリケーションのアドレス")
 	flag.Parse()
+
+	// TODO: Setup the other providers: Facebook and GitHub
+	gomniauth.SetSecurityKey(os.Getenv("OMNIAUTH_SECURITY_KEY"))
+	gomniauth.WithProviders(
+		google.New(
+			os.Getenv("GOOGLE_CLIENT_ID"),
+			os.Getenv("GOOGLE_CLIENT_SECRET"),
+			fmt.Sprintf("http://localhost%s/auth/callback/google", *addr),
+		),
+	)
 
 	room := newRoom()
 	room.tracer = trace.New(os.Stdout)
