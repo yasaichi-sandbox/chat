@@ -29,7 +29,7 @@
             return false
           }
 
-          socket.send(msgBox.val());
+          socket.send(JSON.stringify({ "Message": msgBox.val() }));
           msgBox.val('');
           return false;
         });
@@ -39,8 +39,20 @@
         } else {
           socket = new WebSocket('ws://{{.Host}}/room');
 
-          socket.onclose = () => { alert('接続が終了しました') };
-          socket.onmessage = (e) => { messages.append($('<li>').text(e.data)) }
+          socket.onclose = () => {
+            alert('接続が終了しました');
+          };
+
+          socket.onmessage = (e) => {
+            const msg = JSON.parse(e.data);
+
+            messages.append(
+              $('<li>').append(
+                $('<strong>').text(`${msg.Name}: `),
+                $('<span>').text(msg.Message),
+              )
+            );
+          };
         }
       })
     </script>
