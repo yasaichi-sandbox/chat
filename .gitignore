@@ -57,3 +57,7 @@ vendor
 ### direnv
 .envrc
 
+
+### application
+/avatars/*
+!/avatars/.keep
