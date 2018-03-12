@@ -52,7 +52,7 @@ func main() {
 		),
 	)
 
-	room := newRoom(UseGravatar)
+	room := newRoom(UseFileSystemAvatar)
 	room.tracer = trace.New(os.Stdout)
 
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
