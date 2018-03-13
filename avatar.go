@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"io/ioutil"
+	"path/filepath"
 )
 
 // ErrNoAvatarURL is an error raised when Avatar instance can't return the avatar URL.
@@ -50,8 +52,18 @@ var UseFileSystemAvatar FileSystemAvatar
 func (FileSystemAvatar) URL(c *client) (string, error) {
 	if userID, ok := c.userData["user_id"]; ok {
 		if userIDStr, ok := userID.(string); ok {
-			basename := userIDStr + ".jpg"
-			return "/avatars/" + basename, nil
+			if files, err := ioutil.ReadDir("avatars"); err == nil {
+				for _, file := range files {
+					if file.IsDir() {
+						continue
+					}
+
+					if match, _ := filepath.Match(userIDStr+".*", file.Name()); match {
+						return "/avatars/" + file.Name(), nil
+					}
+				}
+			}
+
 		}
 	}
 
