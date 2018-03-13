@@ -4,12 +4,32 @@ import (
 	"crypto/md5"
 	"fmt"
 	"github.com/stretchr/gomniauth"
+	gomniauthcommon "github.com/stretchr/gomniauth/common"
 	"github.com/stretchr/objx"
 	"io"
 	"log"
 	"net/http"
 	"strings"
 )
+
+type ChatUser interface {
+	UniqueID() string
+	AvatarURL() string
+}
+
+type chatUser struct {
+	// 1. フィールド名を省略した構造体の埋め込みでは、フィールド名が一意に定まるとき
+	//    中間のフィールド名を省略してアクセスできる
+	// 2. gomniauthcommon.UserにはAvatarURLメソッドが定義されている
+	// 3. 1-2が組み合わさった状態でUniqueIDメソッドを実装すれば、chatUserはChatUser
+	//    インターフェイスを実装していることになる
+	gomniauthcommon.User
+	uniqueID string
+}
+
+func (u chatUser) UniqueID() string {
+	return u.uniqueID
+}
 
 type authHandler struct {
 	next http.Handler
