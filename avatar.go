@@ -14,7 +14,7 @@ type Avatar interface {
 	// URL() returns the avatar URL of the specified client
 	// It returns an error when something goes wrong.
 	// Especially it does ErrNoAvatarURL when it can't fetch the avatar URL.
-	URL(c *client) (string, error)
+	URL(ChatUser) (string, error)
 }
 
 type AuthAvatar struct{}
