@@ -15,6 +15,8 @@ import (
 	"text/template"
 )
 
+var avatars Avatar = UseFileSystemAvatar
+
 type templateHandler struct {
 	// All fields are private because their names start with lower case
 	once     sync.Once
@@ -52,7 +54,7 @@ func main() {
 		),
 	)
 
-	room := newRoom(UseFileSystemAvatar)
+	room := newRoom()
 	room.tracer = trace.New(os.Stdout)
 
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))

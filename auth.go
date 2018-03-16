@@ -27,7 +27,7 @@ type chatUser struct {
 	uniqueID string
 }
 
-func (u chatUser) UniqueID() string {
+func (u *chatUser) UniqueID() string {
 	return u.uniqueID
 }
 
@@ -89,15 +89,20 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln("ユーザーの取得に失敗しました:", provider, "-", err)
 		}
 
+		chatUser := &chatUser{User: user}
 		m := md5.New()
 		io.WriteString(m, strings.ToLower(user.Email()))
-		userID := fmt.Sprintf("%x", m.Sum(nil)) // %x is base 16, lower-case, two characters per byte
+		chatUser.uniqueID = fmt.Sprintf("%x", m.Sum(nil)) // %x is base 16, lower-case, two characters per byte
+		avatarURL, err := avatars.URL(chatUser)
+
+		if err != nil {
+			log.Fatalln("avatars.URL()に失敗しました", "-", err)
+		}
 
 		authCookieValue := objx.New(map[string]interface{}{
-			"user_id":    userID,
+			"user_id":    chatUser.uniqueID,
 			"name":       user.Name(),
-			"avatar_url": user.AvatarURL(),
-			"email":      user.Email(),
+			"avatar_url": avatarURL,
 		}).MustBase64()
 		http.SetCookie(w, &http.Cookie{
 			Name:  "auth",
